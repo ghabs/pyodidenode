@@ -1,9 +1,7 @@
 # Creating a Pyodide package
 
-Pyodide includes a set of automatic tools to make it easier to add new
-third-party Python libraries to the build.
-
-These tools automate the following steps to build a package:
+Pyodide includes a toolchain to make it easier to add new third-party Python
+libraries to the build. We automate the following steps:
 
 - Download a source tarball (usually from PyPI)
 - Confirm integrity of the package by comparing it to a checksum
@@ -25,6 +23,18 @@ These tools automate the following steps to build a package:
 Lastly, a `packages.json` file is output containing the dependency tree of all
 packages, so `pyodide.loadPackage` can load a package's dependencies
 automatically.
+
+## mkpkg
+
+If you wish to create a new package for pyodide, the easiest place to start is
+with the `mkpkg` tool. If your package is on PyPI, just run:
+
+`bin/pyodide mkpkg $PACKAGE_NAME`
+
+This will generate a `meta.yaml` (see below) that should work out of the box
+for many pure Python packages. This tool will populate the latest version, download
+link and sha256 hash by querying PyPI. It doesn't currently handle package
+dependencies, so you will need to specify those yourself.
 
 ## The meta.yaml file
 
@@ -66,6 +76,14 @@ The url of the source tarball.
 The tarball may be in any of the formats supported by Python's
 `shutil.unpack_archive`: `tar`, `gztar`, `bztar`, `xztar`, and `zip`.
 
+#### `source/path`
+
+Alternatively to `source/url`, a relative or absolute path can be specified
+as package source. This is useful for local testing or building packages which
+are not available online in the required format.
+
+If a path is specified, any provided checksums are ignored.
+
 #### `source/md5`
 
 The MD5 checksum of the tarball. It is recommended to use SHA256 instead of MD5.
@@ -89,6 +107,17 @@ which the `meta.yaml` file resides. The `dst` path is relative to the root of
 source tree (the expanded tarball).
 
 ### `build`
+
+#### `build/skip_host`
+
+Skip building C extensions for the host environment. Default: `True`.
+
+Setting this to `False` will result in ~2x slower builds for packages that
+include C extensions. It should only be needed when a package is a build
+time dependency for other packages. For instance, numpy is imported during
+installation of matplotlib, importing numpy also imports included C extensions,
+therefore it is built both for host and target.
+
 
 #### `build/cflags`
 

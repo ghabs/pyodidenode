@@ -1,58 +1,56 @@
-# Pyodide
+# [Pyodide](https://github.com/iodide-project/pyodide)
+
 
 [![Build Status](https://circleci.com/gh/iodide-project/pyodide.png)](https://circleci.com/gh/iodide-project/pyodide)
+[![Documentation Status](https://readthedocs.org/projects/pyodide/badge/?version=latest)](https://pyodide.readthedocs.io/?badge=latest)
 
 The Python scientific stack, compiled to WebAssembly.
 
-It provides transparent conversion of objects between Javascript and Python.
-When inside a browser, this means Python has full access to the Web APIs.
+## What is Pyodide?
 
-**While closely related to the [iodide project](https://iodide.io), Pyodide may
-be used standalone in any context where you want to run Python inside a web
-browser.**
+**Pyodide** brings the Python 3.8 runtime to the browser via WebAssembly, along with the Python scientific stack including NumPy, Pandas, Matplotlib, parts of SciPy, and NetworkX. The [`packages` directory](https://github.com/iodide-project/pyodide/tree/master/packages) lists over 35 packages which are currently available.
 
-See [the demo](https://iodide.io/pyodide-demo/python.html)
+**Pyodide** provides transparent conversion of objects between Javascript and Python.
+When used inside a browser, Python has full access to the Web APIs.
 
-# Building
+While closely related to the [iodide project](https://iodide.io), a tool for *literate scientific computing and communication for the web*, Pyodide goes beyond running in a notebook environment. To maximize the flexibility of the modern web, **Pyodide** may
+be used standalone in any context where you want to **run Python inside a web
+browser**.
 
-These instructions were tested on Linux. OSX should be mostly the same.
+## Try Pyodide (no installation needed)
 
-Make sure the prerequisites for [emsdk](https://github.com/juj/emsdk) are
-installed. Pyodide will build a custom, patched version of emsdk, so there is no
-need to build it yourself prior.
+Try the [iodide demo notebook](https://alpha.iodide.io/notebooks/300/) or fire
+up a [Python REPL](https://pyodide-cdn2.iodide.io/latest/full/console.html) directly in your
+browser.
 
-Additional build prerequisites are:
+For further information, look through the [documentation](https://pyodide.readthedocs.io/).
 
-- A working native compiler toolchain, enough to build CPython.
-- A native Python 3.7 to run the build scripts.
-- PyYAML
-- [lessc](https://lesscss.org/) to compile less to css.
-- [uglifyjs](https://github.com/mishoo/UglifyJS) to minify Javascript builds.
-- [ccache](https://ccache.samba.org) (optional) recommended for much faster rebuilds.
+## Getting Started
 
+Pyodide offers three different ways to get started depending on your needs and technical resources.
+These include:
 
-`make`
+- Use hosted distribution of pyodide: see [using pyodide from
+  Javascript](https://pyodide.readthedocs.io/en/latest/using_pyodide_from_javascript.html)
+  documentation.
+- Download a pre-built version from this
+  repository's [releases
+  page](https://github.com/iodide-project/pyodide/releases/) and serve its contents with
+  a web server.
+- [Build Pyodide from source](https://pyodide.readthedocs.io/en/latest/building_from_sources.html)
+  - Build natively with `make`: primarily for Linux users who want to
+    experiment or contribute back to the project.
+  - [Use a Docker image](https://pyodide.readthedocs.io/en/latest/building_from_sources.html#using-docker):
+    recommended for Windows and macOS users and for Linux users who prefer a
+    Debian-based Docker image with the dependencies already installed.
 
-# Testing
+## Contributing
 
-Install the following dependencies into the default Python installation:
+Please view the
+[contributing guide](https://pyodide.readthedocs.io/en/latest/contributing.html)
+for tips on filing issues, making changes, and submitting pull requests.
 
-   `pip install pytest selenium pytest-instafail`
+## License
 
-Install [geckodriver](https://github.com/mozilla/geckodriver/releases) and
-[chromedriver](https://sites.google.com/a/chromium.org/chromedriver/downloads) somewhere
-on your `PATH`.
-
-`pytest test/`
-
-# Benchmarking
-
-Install the same dependencies as for testing.
-
-`make benchmark`
-
-# Linting
-
-Python is linted with `flake8`.  C and Javascript are linted with `clang-format`.
-
-`make lint`
+Pyodide uses the Mozilla Public License Version 2.0. See the
+[LICENSE file](LICENSE) for more details.
